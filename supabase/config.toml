@@ -1,0 +1,37 @@
+project_id = "slnafhvkluqmgwrxwndy"
+
+[functions.notify-admin-new-signup]
+verify_jwt = false
+
+[functions.send-account-activated-email]
+verify_jwt = false
+
+[functions.send-account-blocked-email]
+verify_jwt = false
+
+[functions.send-welcome-email]
+verify_jwt = false
+
+[functions.send-notification-email]
+verify_jwt = false
+
+[functions.notify-client-feedback]
+verify_jwt = false
+
+[functions.cloudflare-stream-upload]
+verify_jwt = false
+
+[functions.cloudflare-stream-signed-url]
+verify_jwt = false
+
+[functions.cloudflare-stream-download]
+verify_jwt = false
+
+[functions.get-delivery-signed-url]
+verify_jwt = false
+
+[functions.check-late-videos]
+verify_jwt = false
+
+[functions.cleanup-old-videos]
+verify_jwt = false

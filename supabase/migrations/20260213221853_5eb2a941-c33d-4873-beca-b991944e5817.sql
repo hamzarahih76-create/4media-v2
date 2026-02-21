@@ -1,0 +1,1 @@
+ALTER TABLE public.client_profiles ADD COLUMN has_thumbnail_design boolean DEFAULT false;

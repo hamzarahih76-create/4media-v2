@@ -1,0 +1,1 @@
+ALTER TABLE public.design_feedback ADD COLUMN revision_audio_path text DEFAULT NULL;

@@ -1,0 +1,1 @@
+ALTER TABLE public.client_profiles ADD COLUMN IF NOT EXISTS contract_duration_months integer DEFAULT 1;

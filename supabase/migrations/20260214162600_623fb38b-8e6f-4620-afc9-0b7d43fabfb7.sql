@@ -1,0 +1,1 @@
+ALTER TABLE public.client_profiles ADD COLUMN IF NOT EXISTS designer_id text;
