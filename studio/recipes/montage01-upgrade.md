@@ -27,3 +27,10 @@ music bed at 123 BPM under the voice (no silences -> no dead-air cutting possibl
 
 ## Feedback log
 - 2026-10-01: v1 delivered (montage01.mp4). Waiting for user notes.
+- 2026-10-01: user on v1: "rak mabdalty walo" -> camera-only changes are too subtle when the burned-in
+  captions stay. No raw rush available. User asked for new captions + motion graphics.
+- 2026-10-01: v2 (Montage02): frosted band (blurred copy of the zoomed frame, y 1130-1730px, 90px feather)
+  hides old captions; transcript re-typed from the old captions (src/data/montage01-captions.ts) as karaoke
+  captions in Cairo 900, brand-green keywords, French words grouped as one LTR token; keyword cards with
+  icons above the band (y 1000); 4media.ma CTA pill. Zoom anchored at 50% 68%, levels 1.0/1.09, punch 1.07,
+  so old captions never escape the band. Lesson: with burned-in text, visible change = new text layer.
