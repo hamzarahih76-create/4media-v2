@@ -37,7 +37,7 @@ def main() -> None:
     duration = float(info["format"]["duration"])
 
     scenes = detect(str(src), ContentDetector(threshold=27.0))
-    cuts = [s[0].get_seconds() for s in scenes[1:]]
+    cuts = [s[0].seconds for s in scenes[1:]]
     bounds = [0.0] + cuts + [duration]
     shot_lengths = [round(b - a, 3) for a, b in zip(bounds, bounds[1:])]
 
@@ -59,7 +59,7 @@ def main() -> None:
                         "-frames:v", "1", "-vf", "scale=360:-2", str(frames_dir / f"shot_{i:03d}.jpg")], check=False)
 
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-pattern_type", "glob", "-i", str(frames_dir / "shot_*.jpg"),
-                    "-vf", "tile=6x0:padding=4", "-frames:v", "1", str(out_dir / "contact.jpg")], check=False)
+                    "-vf", f"tile=6x{max(1, -(-len(shot_lengths) // 6))}:padding=4", "-frames:v", "1", str(out_dir / "contact.jpg")], check=False)
 
     result = {
         "source": src.name,
