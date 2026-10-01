@@ -26,7 +26,7 @@ import { buildBlocks, cameraAt, type CameraOptions } from "../lib/camera";
 
 const GRADE = "contrast(1.06) saturate(1.08)";
 const ORIGIN = "50% 68%"; // zoom anchored low so old captions barely move (stay under the band)
-const TITLE = { top: 8.5, bottom: 15.5 }; // % of height, burned-in title band
+const TITLE = { top: 23.2, bottom: 29.6 }; // % of height, burned-in title band
 const BAND = { top: 1130, bottom: 1730 }; // px, covers old captions at every zoom level
 const BAND_END = 54.133; // end screen has no captions
 

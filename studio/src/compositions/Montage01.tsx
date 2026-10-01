@@ -9,7 +9,7 @@ import { buildBlocks, cameraAt, type CameraOptions } from "../lib/camera";
 // virtual 2-camera jump zooms on the beat, punch transitions, hook, CTA pulse,
 // light grade + vignette, brand progress bar. Recipe: recipes/montage01-upgrade.md
 // Vertical band (in % of height) holding the burned-in "Consultation médicale" title.
-const TITLE = { top: 8.5, bottom: 15.5 };
+const TITLE = { top: 23.2, bottom: 29.6 };
 
 export const Montage01: React.FC = () => {
   const frame = useCurrentFrame();
