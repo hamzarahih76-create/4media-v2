@@ -3,10 +3,10 @@
 
 export const theme = {
   bg: "#FDF7EB",
-  glow: "#5AA8FF",
+  glow: "#7FE38C", // light green edge glow (user: green instead of blue)
   navy: "#14213D",
-  blue: "#3478D8",
-  blueSoft: "#E6F0FC",
+  blue: "#34C759", // accent: open/light green (4media) - key name kept from the reference palette
+  blueSoft: "#E3F7E7",
   gray: "#8A93A3",
   line: "#E9E1D3",
   red: "#E0453A",

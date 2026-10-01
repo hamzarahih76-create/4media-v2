@@ -36,7 +36,7 @@ const Pill: React.FC<{ children: React.ReactNode; color?: string; outline?: bool
       color: outline ? color : "white",
       background: outline ? "white" : color,
       border: `3px solid ${color}`,
-      boxShadow: outline ? "none" : "0 5px 0 rgba(20,40,90,0.2)",
+      boxShadow: outline ? "none" : "0 5px 0 rgba(20,90,40,0.22)",
     }}
   >
     {children}
@@ -300,7 +300,7 @@ const Search: React.FC<P> = ({ t, fps }) => {
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <In t={t} fps={fps} at={38.6}>
             <Row gap={20}>
-              <div style={{ width: 72, height: 72, borderRadius: "50%", background: "#1BA784", display: "flex", alignItems: "center", justifyContent: "center", transform: `scale(${pop(t, 38.8, fps, 300, 9)})` }}>
+              <div style={{ width: 72, height: 72, borderRadius: "50%", background: theme.blue, display: "flex", alignItems: "center", justifyContent: "center", transform: `scale(${pop(t, 38.8, fps, 300, 9)})` }}>
                 <Glyph name="check" size={44} color="white" />
               </div>
               <Big size={58} color={theme.blue}>la solution</Big>

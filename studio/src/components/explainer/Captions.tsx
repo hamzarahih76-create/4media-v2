@@ -60,7 +60,7 @@ export const Captions: React.FC<{ t: number; fps: number; phrases: Phrase[]; anc
             padding: "8px 18px 12px",
             borderRadius: 14,
             background: i === active ? theme.blue : "transparent",
-            boxShadow: i === active ? "0 6px 0 rgba(20,40,90,0.25)" : "none",
+            boxShadow: i === active ? "0 6px 0 rgba(20,90,40,0.28)" : "none",
             textShadow: i === active ? "none" : "0 3px 12px rgba(0,0,0,0.55), 0 0 2px rgba(0,0,0,0.4)",
           }}
         >

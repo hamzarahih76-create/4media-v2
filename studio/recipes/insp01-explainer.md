@@ -32,4 +32,4 @@ Speaker: man on orange armchair talking Darija about pricing. Applied to: media-
 - Uses public/media/src1440.mp4 (1440p proxy of the 4K rush) for sharper crops.
 
 ## Feedback log
-- 2026-10-01: v1 rendered (insp01.mp4). Waiting for user notes.
+- 2026-10-01: v1 rendered (insp01.mp4). User: "top". Asked: edge glow + all animation accents in light/open green instead of blue (cream background stays). -> glow #7FE38C, accent #34C759, soft #E3F7E7 (insp01_green.mp4).
