@@ -14,6 +14,7 @@ export type CameraOptions = {
   levels: number[]; // zoom levels cycled on talking-head blocks
   push: number; // extra zoom gained over one block
   ctaStart: number;
+  punch?: number; // overshoot scale on shot changes (default 1.14)
 };
 
 export type CameraState = { scale: number; blur: number; flash: number };
@@ -64,7 +65,7 @@ export function cameraAt(t: number, fps: number, opts: CameraOptions, blocks: Re
     const dt = t - s.start;
     if (dt >= 0 && dt < d) {
       const k = ease(dt / d);
-      scale *= interpolate(k, [0, 1], [1.14, 1]);
+      scale *= interpolate(k, [0, 1], [opts.punch ?? 1.14, 1]);
       blur = Math.max(blur, interpolate(k, [0, 1], [6, 0]));
       flash = Math.max(flash, interpolate(dt, [0, 2 / fps, d], [0.22, 0.12, 0], { extrapolateRight: "clamp" }));
     }
