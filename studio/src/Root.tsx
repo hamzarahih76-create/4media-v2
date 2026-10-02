@@ -5,6 +5,7 @@ import { Montage02 } from "./compositions/Montage02";
 import { Insp01 } from "./compositions/Insp01";
 import { Insp02 } from "./compositions/Insp02";
 import { Alk01 } from "./compositions/Alk01";
+import { Alk02 } from "./compositions/Alk02";
 import { montage01 } from "./data/montage01";
 
 // Every finished template is registered here. One <Composition> per template.
@@ -55,6 +56,14 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Alk01"
         component={Alk01}
+        durationInFrames={Math.floor(68.8 * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="Alk02"
+        component={Alk02}
         durationInFrames={Math.floor(68.8 * 60)}
         fps={60}
         width={1080}
