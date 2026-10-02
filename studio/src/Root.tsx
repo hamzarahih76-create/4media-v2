@@ -6,6 +6,8 @@ import { Insp01 } from "./compositions/Insp01";
 import { Insp02 } from "./compositions/Insp02";
 import { Alk01 } from "./compositions/Alk01";
 import { Alk02 } from "./compositions/Alk02";
+import { ObjTest } from "./three/ObjTest";
+import { Alk03 } from "./compositions/Alk03";
 import { montage01 } from "./data/montage01";
 
 // Every finished template is registered here. One <Composition> per template.
@@ -64,6 +66,15 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Alk02"
         component={Alk02}
+        durationInFrames={Math.floor(68.8 * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+      />
+      <Composition id="ObjTest" component={ObjTest} durationInFrames={60} fps={30} width={1080} height={1920} />
+      <Composition
+        id="Alk03"
+        component={Alk03}
         durationInFrames={Math.floor(68.8 * 60)}
         fps={60}
         width={1080}
