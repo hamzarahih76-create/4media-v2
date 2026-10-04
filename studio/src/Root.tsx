@@ -8,6 +8,8 @@ import { Alk01 } from "./compositions/Alk01";
 import { Alk02 } from "./compositions/Alk02";
 import { ObjTest } from "./three/ObjTest";
 import { Alk03 } from "./compositions/Alk03";
+import { GhitaShots } from "./three/GhitaShots";
+import { Ghita01 } from "./compositions/Ghita01";
 import { montage01 } from "./data/montage01";
 
 // Every finished template is registered here. One <Composition> per template.
@@ -80,6 +82,8 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
       />
+      <Composition id="GhitaShots" component={GhitaShots} durationInFrames={1} fps={30} width={900} height={900} defaultProps={{ shot: "window" as const }} />
+      <Composition id="Ghita01" component={Ghita01} durationInFrames={1274} fps={30} width={1080} height={1920} />
     </>
   );
 };

@@ -380,3 +380,97 @@ export const Room: React.FC<{ k: number } & G> = ({ k, ...g }) => {
     </group>
   );
 };
+
+/** smart electric toothbrush with a camera lens on the head; water: 0..1 jet strength */
+export const Toothbrush: React.FC<{ color?: string; water?: number; lensGlow?: number } & G> = ({ color = "#F5F7FA", water = 0, lensGlow = 1, ...g }) => {
+  const bristles = useMemo(() => {
+    const out: [number, number, string][] = [];
+    for (let r = 0; r < 9; r++) for (let c = 0; c < 3; c++) out.push([-0.42 + r * 0.105, -0.1 + c * 0.1, r % 3 === 1 ? "#5FB6F0" : "#FFFFFF"]);
+    return out;
+  }, []);
+  return (
+    <group {...g}>
+      {/* handle */}
+      <mesh position={[0, -1.6, 0]} castShadow>
+        <capsuleGeometry args={[0.32, 2.6, 12, 32]} />
+        <meshPhysicalMaterial color={color} roughness={0.25} clearcoat={1} clearcoatRoughness={0.1} />
+      </mesh>
+      <mesh position={[0, -1.15, 0.3]}>
+        <torusGeometry args={[0.1, 0.025, 12, 32]} />
+        <meshStandardMaterial color="#5FB6F0" emissive="#5FB6F0" emissiveIntensity={1.2} />
+      </mesh>
+      <RoundedBox args={[0.5, 0.9, 0.05]} radius={0.04} position={[0, -2.1, 0.3]}>
+        <meshStandardMaterial color="#C9A8F0" roughness={0.3} />
+      </RoundedBox>
+      {/* neck */}
+      <mesh position={[0, 0.55, 0]} castShadow>
+        <cylinderGeometry args={[0.1, 0.2, 1.4, 24]} />
+        <meshPhysicalMaterial color={color} roughness={0.25} clearcoat={1} />
+      </mesh>
+      {/* head */}
+      <RoundedBox args={[0.42, 1.05, 0.3]} radius={0.13} smoothness={5} position={[0, 1.65, 0]} castShadow>
+        <meshPhysicalMaterial color={color} roughness={0.25} clearcoat={1} />
+      </RoundedBox>
+      {bristles.map(([y, x, c], i) => (
+        <mesh key={i} position={[x, 1.65 + y, 0.27]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.035, 0.035, 0.28, 8]} />
+          <meshStandardMaterial color={c} roughness={0.6} />
+        </mesh>
+      ))}
+      {/* camera lens on the back of the head */}
+      <mesh position={[0, 1.85, -0.17]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.12, 0.12, 0.06, 32]} />
+        <meshStandardMaterial color="#0B0D12" roughness={0.1} metalness={0.6} />
+      </mesh>
+      <mesh position={[0, 1.85, -0.205]} rotation={[0, Math.PI, 0]}>
+        <circleGeometry args={[0.075, 32]} />
+        <meshStandardMaterial color="#2E7BEA" emissive="#4FA3FF" emissiveIntensity={1.5 * lensGlow} roughness={0.05} />
+      </mesh>
+      <mesh position={[0, 1.85, -0.2]} rotation={[0, Math.PI, 0]}>
+        <ringGeometry args={[0.13, 0.155, 48]} />
+        <meshStandardMaterial color="#9AD0FF" emissive="#9AD0FF" emissiveIntensity={lensGlow} side={THREE.DoubleSide} />
+      </mesh>
+      {water > 0 && (
+        <mesh position={[0, 1.65, 0.75]} rotation={[Math.PI / 2, 0, 0]} scale={[1, water, 1]}>
+          <coneGeometry args={[0.22, 0.9, 24, 1, true]} />
+          <meshPhysicalMaterial color="#BFE6FF" transparent opacity={0.45} roughness={0} transmission={0.6} side={THREE.DoubleSide} />
+        </mesh>
+      )}
+    </group>
+  );
+};
+
+/** molar tooth; plaque: 0..1 shows yellow tartar spots; scan: vertical position of a blue scan ring (null = none) */
+export const Tooth: React.FC<{ plaque?: number; scan?: number | null } & G> = ({ plaque = 0, scan = null, ...g }) => {
+  const enamel = <meshPhysicalMaterial color="#FFFFFF" roughness={0.15} clearcoat={1} clearcoatRoughness={0.06} />;
+  return (
+    <group {...g}>
+      <RoundedBox args={[2.1, 1.5, 1.8]} radius={0.62} smoothness={8} castShadow>{enamel}</RoundedBox>
+      {[[-0.45, 0.62, 0.38], [0.45, 0.62, 0.38], [-0.45, 0.62, -0.38], [0.45, 0.62, -0.38]].map(([x, y, z], i) => (
+        <mesh key={i} position={[x, y, z]} scale={[1, 0.55, 1]} castShadow>
+          <sphereGeometry args={[0.42, 32, 24]} />
+          {enamel}
+        </mesh>
+      ))}
+      {[-0.48, 0.48].map((x) => (
+        <mesh key={x} position={[x * 1.05, -1.45, 0]} rotation={[0, 0, x > 0 ? -0.1 : 0.1]} castShadow>
+          <cylinderGeometry args={[0.38, 0.1, 1.9, 32]} />
+          {enamel}
+        </mesh>
+      ))}
+      {plaque > 0 &&
+        [[0.62, 0.15, 0.9], [-0.35, -0.2, 0.92], [0.1, 0.35, 0.93], [-0.8, 0.2, 0.7]].map(([x, y, z], i) => (
+          <mesh key={i} position={[x, y, z]} scale={[plaque, plaque, plaque * 0.4]}>
+            <sphereGeometry args={[0.17 - i * 0.02, 20, 12]} />
+            <meshStandardMaterial color="#E2B53C" roughness={0.75} />
+          </mesh>
+        ))}
+      {scan !== null && (
+        <mesh position={[0, scan, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[1.45, 0.03, 12, 96]} />
+          <meshStandardMaterial color="#4FA3FF" emissive="#4FA3FF" emissiveIntensity={2.5} />
+        </mesh>
+      )}
+    </group>
+  );
+};
