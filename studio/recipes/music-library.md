@@ -11,5 +11,8 @@ Note to user (done): commercial songs can get muted/blocked on IG/TikTok; royalt
 | broke_in_a_minute (Tory Lanez) | ~123 | hype trap, energy rises after 20s | fast tech/product reveals, before/after, dynamic reels |
 | not_like_us (Kendrick) | ~99 | aggressive West-coast beat, high energy from 10s | bold hooks, myths-busting, "comparison" reels |
 
-Mix: `python3 scripts/add_music.py <video> media/music/stems/<instrumental>.wav <out> --start S --gain -16`
+Mix: `python3 scripts/add_music.py <video> media/music/stems/<instrumental>.wav <out> --start S` (gain -13 dB default = ~13 dB under the voice; voice normalized first)
 (always use the instrumental under speech; sidechain ducks it while the doctor talks).
+
+## Used
+- Ghita v3 (dentist/Dyson tech reel): broke_in_a_minute_inst from 35s -> deliveries/ghita_v3_music.mp4
