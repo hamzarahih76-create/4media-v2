@@ -37,3 +37,10 @@ EXACTLY (structure, design, animations); replace AI photos (no Higgsfield credit
   RTL clip wipe + blur + rise, key words with white->blue gradient); hook and full-screen words in Inter 800
   with tracking tightening; "28" as 2D count-up gradient number. Whisper large-v3 added (better than turbo
   on Darija but still imperfect) -> scripts from the user are still the best source for exact captions.
+- 2026-10-04: user on v2: synthesized SFX are bad ("nul") -> removed; user will send a real SFX library +
+  background music. Wants FILM BURN between transitions and animations that are clearly visible/dynamic.
+  -> v3 `Ghita03.tsx`: reusable `components/FilmBurn.tsx` (procedural: multiply warm vignette + screen
+  orange/red blobs sweeping from one side + edge burn + white-hot core + grain, 0.6s centred on every cut);
+  stronger punch zoom (0.14 / 0.32 whip) + 2.2deg roll on cuts, slow push-in inside each segment, camera
+  shake on highlighted words, captions pop word-by-word (spring overshoot, key words bigger 76px), pills with
+  springier overshoot. Voice-only audio until the user's SFX/music arrive.
