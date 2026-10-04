@@ -29,3 +29,11 @@ EXACTLY (structure, design, animations); replace AI photos (no Higgsfield credit
 
 ## Feedback log
 - 2026-10-04: v1 rendered (ghita01.mp4).
+- 2026-10-04: user on v1: remove the blur behind her (mask halo looked bad); captions must follow exactly
+  what she says; cut the dead pieces; add transitions; text should "write itself" in 2D, Apple-like (3D not
+  needed for text). -> v2 `Ghita02.tsx`: no portrait blur; silences > 0.3s cut via an EDL (`cuts` in
+  data/ghita02.ts, output->source time mapping, 2-frame audio fades); alternating framing 1.04/1.13 per
+  segment + punch (and whip-zoom on long cuts); Apple write-on captions (IBM Plex Sans Arabic 700, per-word
+  RTL clip wipe + blur + rise, key words with white->blue gradient); hook and full-screen words in Inter 800
+  with tracking tightening; "28" as 2D count-up gradient number. Whisper large-v3 added (better than turbo
+  on Darija but still imperfect) -> scripts from the user are still the best source for exact captions.
