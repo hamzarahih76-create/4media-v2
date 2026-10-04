@@ -424,11 +424,11 @@ export const Toothbrush: React.FC<{ color?: string; water?: number; lensGlow?: n
       </mesh>
       <mesh position={[0, 1.85, -0.205]} rotation={[0, Math.PI, 0]}>
         <circleGeometry args={[0.075, 32]} />
-        <meshStandardMaterial color="#2E7BEA" emissive="#4FA3FF" emissiveIntensity={1.5 * lensGlow} roughness={0.05} />
+        <meshStandardMaterial color="#2E7BEA" emissive="#4FA3FF" emissiveIntensity={4 * lensGlow} roughness={0.05} />
       </mesh>
       <mesh position={[0, 1.85, -0.2]} rotation={[0, Math.PI, 0]}>
         <ringGeometry args={[0.13, 0.155, 48]} />
-        <meshStandardMaterial color="#9AD0FF" emissive="#9AD0FF" emissiveIntensity={lensGlow} side={THREE.DoubleSide} />
+        <meshStandardMaterial color="#9AD0FF" emissive="#9AD0FF" emissiveIntensity={3 * lensGlow} side={THREE.DoubleSide} />
       </mesh>
       {water > 0 && (
         <mesh position={[0, 1.65, 0.75]} rotation={[Math.PI / 2, 0, 0]} scale={[1, water, 1]}>

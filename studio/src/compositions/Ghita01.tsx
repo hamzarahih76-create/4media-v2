@@ -134,8 +134,8 @@ export const Ghita01: React.FC = () => {
         const out = ramp(t, floatBrush.end, floatBrush.end + 0.3);
         return (
           <AbsoluteFill style={{ filter: "drop-shadow(0 0 14px rgba(255,255,255,0.95)) drop-shadow(0 0 30px rgba(170,215,255,0.6))", opacity: 1 - out }}>
-            <ThreeCanvas width={1080} height={1920} camera={{ fov: 35, position: [0, 0, 26] }} flat gl={{ alpha: true, antialias: true }}>
-              <Studio envIntensity={1.2} />
+            <ThreeCanvas width={1080} height={1920} camera={{ fov: 35, position: [0, 0, 26] }} gl={{ alpha: true, antialias: true }}>
+              <Studio envIntensity={0.55} />
               <group position={[0.3, -3.6 + Math.sin(t * 2) * 0.15, 3]} rotation={[0.3, t * 0.6, Math.PI / 2 - 0.2]} scale={Math.max(0.001, s * 1.05)}>
                 <Toothbrush water={0.5 + 0.3 * Math.sin(t * 6)} />
               </group>
@@ -151,7 +151,7 @@ export const Ghita01: React.FC = () => {
         return (
           <AbsoluteFill style={{ opacity: 1 - out }}>
             <ThreeCanvas width={1080} height={1920} camera={{ fov: 35, position: [0, 0, 26] }} gl={{ alpha: true, antialias: true }}>
-              <Studio envIntensity={1.4} />
+              <Studio envIntensity={0.7} />
               <group position={[0.7, -4.3, 2]} rotation={[0.08, (1 - s) * 1.6 + Math.sin(t * 1.2) * 0.12, 0]} scale={Math.max(0.001, s)}>
                 <Text3D text={bigNumber.n} font="fonts/oswald-700.woff" size={4.6} depth={0.9} bevel={0.06} color="#AEB6BF" sideColor="#5E6670" />
               </group>
@@ -210,8 +210,8 @@ export const Ghita01: React.FC = () => {
         return (
           <AbsoluteFill style={{ transform: `translateX(${x}px)`, filter: Math.abs(x) > 4 ? `blur(${Math.min(18, Math.abs(x) / 40)}px)` : undefined }}>
             <AbsoluteFill style={{ background: B ? "radial-gradient(circle at 50% 40%, #FBE9DA, #D9AE90)" : "linear-gradient(180deg, #7FAAC4, #5F8DA8)" }} />
-            <ThreeCanvas width={1080} height={1920} camera={{ fov: 32, position: [0, 0, 24] }} shadows flat gl={{ alpha: true, antialias: true }}>
-              <Studio envIntensity={1.2} />
+            <ThreeCanvas width={1080} height={1920} camera={{ fov: 32, position: [0, 0, 24] }} shadows gl={{ alpha: true, antialias: true }}>
+              <Studio envIntensity={0.55} />
               {!B && (
                 <group position={[0, 1.2, 0]} rotation={[0.1, Math.PI + 0.5 + (t - fs.start) * 0.35, 0.05]} scale={2.05}>
                   <Toothbrush lensGlow={1.5} />
