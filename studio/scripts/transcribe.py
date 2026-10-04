@@ -16,7 +16,8 @@ import sherpa_onnx
 
 src, out = sys.argv[1], sys.argv[2]
 lang = sys.argv[3] if len(sys.argv) > 3 else "ar"
-M = "/root/models/sherpa-onnx-whisper-turbo/turbo"
+import os
+M = os.environ.get("WHISPER", "/root/models/sherpa-onnx-whisper-turbo/turbo")
 SR = 16000
 
 pcm = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", src, "-ac", "1", "-ar", str(SR), "-f", "s16le", "-"], capture_output=True, check=True).stdout
