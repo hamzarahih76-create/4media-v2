@@ -44,3 +44,7 @@ EXACTLY (structure, design, animations); replace AI photos (no Higgsfield credit
   stronger punch zoom (0.14 / 0.32 whip) + 2.2deg roll on cuts, slow push-in inside each segment, camera
   shake on highlighted words, captions pop word-by-word (spring overshoot, key words bigger 76px), pills with
   springier overshoot. Voice-only audio until the user's SFX/music arrive.
+- 2026-10-04: user on v3: film burn far too much (every cut, too strong - hurts the eyes); the camera
+  shake/roll/punch made her look like she moves by herself -> REMOVE. Rule: picture must stay CLEAN; film
+  burn only on a few key cuts, low opacity. -> v3.1: static alternating framing only, no shake/roll/punch/
+  push-in; FilmBurn strength 0.45 on 3 topic cuts (out 2.87, 17.83, 27.68). Music: broke_in_a_minute_inst @35s.

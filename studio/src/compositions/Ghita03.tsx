@@ -14,7 +14,7 @@ import { Studio, Tooth, Toothbrush } from "../three/objects";
 import { FilmBurn } from "../components/FilmBurn";
 
 // Ghita v3 (user feedback on v2): film-burn transitions between cuts, more dynamic/visible animations
-// (harder punch zooms + roll, pop-in captions, shake on key words). Synth SFX removed (user sends a library).
+// (v3.1 after user feedback: camera motion removed - clean static framing; film burn only on 3 cuts, light). Synth SFX removed.
 // Ghita v2: same structure as v1 (toys-reel copy) with the user's fixes - no background blur, silences cut
 // with punch/zoom transitions on every jump cut, 2D Apple-keynote style write-on captions and titles.
 // Output time -> source time via `cuts`; every graphic is keyed on SOURCE time.
@@ -93,19 +93,12 @@ export const Ghita03: React.FC = () => {
 
   // camera: alternate framing per segment (jump cuts read as 2 cameras) + punch transition on each cut
   const level = [1.04, 1.13][seg.i % 2];
-  const punch = seg.i > 0 ? 1 - ramp(local, 0, 0.3, ease) : 0;
-  const bigCut = seg.i > 0 && seg.src - cuts[seg.i - 1][1] > 1; // whip-zoom on long cuts
-  // shake on highlighted words (decays in 0.35s)
-  const hlHits = captions.flatMap((c) => { const w = c.text.split(" "); const span = (c.end - c.start) * 0.75; return w.map((x, i) => (c.hl?.some((h) => x.includes(h)) ? c.start + (span * i) / w.length : -9)); }).filter((x) => x > 0);
-  const shake = Math.max(0, ...hlHits.map((h) => (t >= h && t < h + 0.35 ? 1 - (t - h) / 0.35 : 0)));
-  const slow = 1 + 0.03 * ramp(local, 0, seg.len, Easing.linear); // slow push-in inside each segment
-  const scale = level * slow * (1 + punch * (bigCut ? 0.32 : 0.14)) * (1 + shake * 0.03);
-  const roll = punch * (seg.i % 2 ? 2.2 : -2.2) + Math.sin(tOut * 47) * shake * 0.6;
-  const shx = Math.sin(tOut * 61) * shake * 10, shy = Math.cos(tOut * 53) * shake * 8;
-  const blur = punch * (bigCut ? 16 : 6);
-  // film burn around every cut (output time), centred on the cut
-  const cutTimes = segs.slice(1).map((s) => s.out);
-  const burn = cutTimes.map((c, i) => ({ p: (tOut - c + 0.3) / 0.6, i })).find((b) => b.p > 0 && b.p < 1);
+  // v3.1 (user): clean picture - no shake/roll/punch, only a static alternating framing per jump cut
+  const scale = level;
+  const shx = 0, shy = 0, roll = 0, blur = 0;
+  // film burn on 3 topic changes only, light (strength 0.45)
+  const burnCuts = [2, 7, 9].map((i) => segs[i].out);
+  const burn = burnCuts.map((c, i) => ({ p: (tOut - c + 0.3) / 0.6, i })).find((b) => b.p > 0 && b.p < 1);
 
   const win = Math.min(ramp(t, windowCard.start, windowCard.start + 0.5), 1 - ramp(t, windowCard.end - 0.3, windowCard.end, inout));
   const winS = springAt(t, windowCard.start, fps, 16, 110);
@@ -259,7 +252,7 @@ export const Ghita03: React.FC = () => {
         return <AbsoluteFill key={f.id} style={{ background: `linear-gradient(90deg, transparent ${50 - k * 40}%, rgba(10,20,28,${0.7 * k}) 50%, transparent ${50 + k * 40}%)`, filter: "blur(30px)" }} />;
       })}
       {fl > 0.01 && <AbsoluteFill style={{ background: "#F2FBFF", opacity: fl }} />}
-      {burn && <FilmBurn p={burn.p} seed={burn.i} frame={frame} strength={bigCut || burn.i % 2 === 0 ? 1 : 0.75} />}
+      {burn && <FilmBurn p={burn.p} seed={burn.i} frame={frame} strength={0.45} />}
     </AbsoluteFill>
   );
 };
