@@ -22,11 +22,11 @@ dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", 
 fo = max(0.0, dur - 1.8)
 fc = (
     f"[1:a]atrim=start={a.start}:duration={dur},asetpts=PTS-STARTPTS,aresample=48000,"
-    f"volume={a.gain}dB,afade=t=in:d=0.6,afade=t=out:st={fo}:d=1.8[m];"
-    "[0:a]aresample=48000,loudnorm=I=-16:TP=-2:LRA=11,asplit=2[v][sc];"
+    f"volume={a.gain}dB,afade=t=in:d=0.6,afade=t=out:st={fo}:d=1.8,apad,atrim=duration={dur}[m];"
+    "[0:a]aresample=48000,loudnorm=I=-16:TP=-2:LRA=11,aresample=48000,apad,asplit=2[v][sc];"
     f"[m][sc]sidechaincompress=threshold=0.06:ratio={a.duck}:attack=20:release=400:makeup=1[md];"
-    "[v][md]amix=inputs=2:duration=first:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]"
+    f"[v][md]amix=inputs=2:duration=shortest:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,atrim=duration={dur}[a]"
 )
 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", a.video, "-i", a.music, "-filter_complex", fc,
-                "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", a.out], check=True)
+                "-map", "0:v", "-map", "[a]", "-t", str(dur), "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", a.out], check=True)
 print(a.out)
