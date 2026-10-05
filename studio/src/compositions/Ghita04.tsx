@@ -21,6 +21,12 @@ import { FilmBurn } from "../components/FilmBurn";
 // Output time -> source time via `cuts`; every graphic is keyed on SOURCE time.
 
 const SRC = "media/ghita.mp4";
+// true once the Higgsfield photos/clip are downloaded into public/media/ghita/hf_*; false = 3D renders
+const HF = false;
+const IMG = HF
+  ? { window: "media/ghita/hf_window.png", lens: "media/ghita/hf_lens.png", plaque: "media/ghita/hf_plaque.png" }
+  : { window: "media/ghita/window.png", lens: "media/ghita/lens.png", plaque: "media/ghita/plaque.png" };
+const MASKS = 1274; // public/media/ghitamask/f_0001..f_1274.png = source seconds * 30
 const AR = "IBM Plex Sans Arabic";
 const ease = Easing.bezier(0.22, 1, 0.36, 1);
 
@@ -123,14 +129,28 @@ export const Ghita04: React.FC = () => {
       </AbsoluteFill>
       <AbsoluteFill style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.12), transparent 30%, transparent 58%, rgba(0,0,0,0.45))" }} />
 
-      {/* ---------- window card top-left ---------- */}
-      {win > 0 && (
-        <div style={{ position: "absolute", left: 50, top: 190, width: 420, height: 420, perspective: 1200, opacity: win }}>
-          <div style={{ width: "100%", height: "100%", borderRadius: 44, overflow: "hidden", border: "5px solid rgba(255,255,255,0.9)", boxShadow: "0 0 34px rgba(255,255,255,0.4), 0 26px 50px rgba(0,0,0,0.35)", transform: `rotateY(${24 - (1 - winS) * 40}deg) rotateZ(-5deg) scale(${0.7 + 0.3 * winS})`, transformOrigin: "0% 50%" }}>
-            <Img src={staticFile("media/ghita/hf_window.png")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          </div>
-        </div>
-      )}
+      {/* ---------- big tilted glass window BEHIND the speaker (reference 3.5-5.8s), she is masked on top ---------- */}
+      {win > 0 && (() => {
+        const sweep = ramp(t, windowCard.start + 0.3, windowCard.start + 1.5);
+        const mask = staticFile(`media/ghitamask/f_${String(Math.min(MASKS, Math.floor(t * 30) + 1)).padStart(4, "0")}.png`);
+        return (
+          <>
+            <div style={{ position: "absolute", left: 40, top: 150, width: 600, height: 1040, perspective: 1600, opacity: win }}>
+              <div style={{ width: "100%", height: "100%", borderRadius: 56, overflow: "hidden", border: "4px solid rgba(255,255,255,0.92)", boxShadow: "0 0 40px rgba(200,230,255,0.55), 0 30px 70px rgba(0,0,0,0.45)", transform: `rotateY(${18 - (1 - winS) * 50}deg) rotateZ(${-2 * winS}deg) translateX(${(1 - winS) * -200}px) scale(${0.85 + 0.15 * winS})`, transformOrigin: "0% 50%" }}>
+                <Img src={staticFile(IMG.window)} style={{ width: "100%", height: "100%", objectFit: "cover", transform: `scale(${1.12 - 0.08 * ramp(t, windowCard.start, windowCard.end, Easing.linear)})` }} />
+                <div style={{ position: "absolute", inset: 0, background: `linear-gradient(115deg, transparent ${sweep * 100 - 10}%, rgba(255,255,255,0.35) ${sweep * 100}%, transparent ${sweep * 100 + 8}%)` }} />
+              </div>
+            </div>
+            <AbsoluteFill style={{ transform: `scale(${scale})`, transformOrigin: "50% 40%", WebkitMaskImage: `url(${mask})`, maskImage: `url(${mask})`, WebkitMaskSize: "100% 100%", maskSize: "100% 100%", opacity: win }}>
+              {segs.filter((x) => x.src < windowCard.end + 0.5).map((x) => (
+                <Sequence key={x.i} from={Math.round(x.out * fps)} durationInFrames={Math.round(x.len * fps)} layout="none">
+                  <OffthreadVideo src={staticFile(SRC)} muted startFrom={Math.round(x.src * fps)} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", filter: "contrast(1.05) saturate(1.02)" }} />
+                </Sequence>
+              ))}
+            </AbsoluteFill>
+          </>
+        );
+      })()}
 
       {/* ---------- hook title (Apple style: tracking tightens, blur to sharp, gradient) ---------- */}
       {t >= hook.start && t < hook.end + 0.3 && (() => {
@@ -156,7 +176,7 @@ export const Ghita04: React.FC = () => {
         const s = springAt(t, floatBrush.start, fps, 12, 140);
         const out = ramp(t, floatBrush.end, floatBrush.end + 0.3);
         return (
-          <AbsoluteFill style={{ filter: "drop-shadow(0 0 14px rgba(255,255,255,0.9)) drop-shadow(0 0 30px rgba(170,215,255,0.5))", opacity: 1 - out }}>
+          <AbsoluteFill style={{ filter: "drop-shadow(0 0 6px rgba(255,255,255,0.7)) drop-shadow(0 0 22px rgba(120,190,255,0.55)) drop-shadow(0 14px 20px rgba(0,0,0,0.35))", opacity: 1 - out }}>
             <ThreeCanvas width={1080} height={1920} camera={{ fov: 35, position: [0, 0, 26] }} gl={{ alpha: true, antialias: true }}>
               <Studio envIntensity={0.55} />
               <group position={[0.3, -4.1 + Math.sin(t * 2) * 0.15, 3]} rotation={[0.3, t * 0.6, Math.PI / 2 - 0.2]} scale={Math.max(0.001, s * 1.05)}>
@@ -187,7 +207,7 @@ export const Ghita04: React.FC = () => {
       ))}
 
       {t >= cards.start && t < cards.end + 0.2 &&
-        ["media/ghita/hf_lens.png", "media/ghita/hf_plaque.png"].map((im, i) => {
+        [IMG.lens, IMG.plaque].map((im, i) => {
           const s = springAt(t, cards.start + i * 0.5, fps, 14, 140);
           const out = ramp(t, cards.end, cards.end + 0.2);
           return (
@@ -223,7 +243,26 @@ export const Ghita04: React.FC = () => {
         return (
           <AbsoluteFill style={{ transform: `translateX(${x}px)`, filter: Math.abs(x) > 4 ? `blur(${Math.min(18, Math.abs(x) / 40)}px)` : undefined }}>
             <AbsoluteFill style={{ background: B ? "radial-gradient(circle at 50% 40%, #FBE9DA, #D9AE90)" : "linear-gradient(180deg, #7FAAC4, #5F8DA8)" }} />
-            {(() => {
+            {!HF && (
+            <ThreeCanvas width={1080} height={1920} camera={{ fov: 32, position: [0, 0, 24] }} shadows gl={{ alpha: true, antialias: true }}>
+              <Studio envIntensity={0.55} />
+              {!B && (
+                <group position={[0, 1.2, 0]} rotation={[0.1, Math.PI + 0.5 + (t - fs.start) * 0.35, 0.05]} scale={2.05}>
+                  <Toothbrush lensGlow={1.5} />
+                </group>
+              )}
+              {B && (
+                <>
+                  <Tooth position={[0.9, 1.4, 0]} rotation={[0.3, -0.5 + (t - fs.start) * 0.25, 0]} scale={1.7} plaque={1 - ramp(t, fs.start + 1.0, fs.start + 2.0)} scan={interpolate(t, [fs.start, fs.end], [1.6, -1.2], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })} />
+                  <group position={[-2.7, 1.8, 1]} rotation={[0.2, 2.6, 0.5]} scale={1.2}>
+                    <Toothbrush water={ramp(t, fs.start + 0.8, fs.start + 1.2)} lensGlow={1.5} />
+                  </group>
+                </>
+              )}
+              <ContactShadows position={[0, -5.6, 0]} opacity={0.35} scale={14} blur={2.6} far={7} />
+            </ThreeCanvas>
+            )}
+            {HF && (() => {
               const k = (t - fs.start) / (fs.end - fs.start);
               const st: React.CSSProperties = { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transform: `scale(${1.08 - 0.06 * k})` };
               return B ? (

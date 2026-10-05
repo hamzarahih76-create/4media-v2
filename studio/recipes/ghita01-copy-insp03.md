@@ -48,3 +48,10 @@ EXACTLY (structure, design, animations); replace AI photos (no Higgsfield credit
   shake/roll/punch made her look like she moves by herself -> REMOVE. Rule: picture must stay CLEAN; film
   burn only on a few key cuts, low opacity. -> v3.1: static alternating framing only, no shake/roll/punch/
   push-in; FilmBurn strength 0.45 on 3 topic cuts (out 2.87, 17.83, 27.68). Music: broke_in_a_minute_inst @35s.
+- 2026-10-05: user: "exactly like the inspiration, top". Side-by-side contact sheets (1fps) vs insp03 ->
+  v4 `Ghita04.tsx`: BIG tilted glass window (600x1040 @ 40,150, rotateY 18deg, white glowing border, light
+  sweep) BEHIND the speaker with her masked in front (ghitamask, source-time indexed), like ref 3.5-5.8s;
+  floating brush glow toned down (was a white streak). `HF` flag switches window/cards/full-screens to
+  Higgsfield photos + Kling clip (hf_*). Higgsfield API works (estimate endpoint is free; Soul v2 standard
+  = $0.004/img, Kling 2.5 turbo std i2v 5s = $0.21) but outputs live on d3u0tzju9qaucj.cloudfront.net,
+  which the environment network blocks -> user must add it to Allowed domains. Budget for Ghita: $0.5.
